@@ -1,0 +1,4 @@
+accuracy,f1,mae,model,status
+0.9078369140625,0.8265165441176471,,xgboost,
+,,5.685298919677734,2d-unet,evaluated
+,,5.674996376037598,standard-convlstm,evaluated

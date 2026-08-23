@@ -1,0 +1,30 @@
+{
+  "hybrid": {
+    "active_precipitation": {
+      "active_mae": 6.317517763449132,
+      "active_pixel_count": 16384,
+      "active_rmse": 8.017761120250322
+    },
+    "best_validation_loss": 3.5774857997894287,
+    "brier_score": 0.24820631179810826,
+    "brier_skill_score": -0.15888482134848014,
+    "contingency": {
+      "correct_negatives": 11293,
+      "csi": 0.0,
+      "false_alarms": 0,
+      "far": 0.0,
+      "frequency_bias": 0.0,
+      "hits": 0,
+      "hss": 0.0,
+      "misses": 5091,
+      "pod": 0.0
+    },
+    "epochs_completed": 30,
+    "multi_threshold_csi": {
+      "CSI_0.1": 0.0,
+      "CSI_15": 0.0,
+      "CSI_2.5": 0.0,
+      "CSI_7.5": 0.0
+    }
+  }
+}
