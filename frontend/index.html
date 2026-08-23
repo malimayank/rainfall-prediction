@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Monsoon Rainfall Intelligence</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div><p class="eyebrow">MONSOON INTELLIGENCE / LIVE OPS</p><h1>Rainfall field diagnostic</h1></div>
+    <div class="status"><span class="status-dot"></span><span id="system-status">Demo model ready</span></div>
+  </header>
+  <main class="dashboard">
+    <section class="map-panel">
+      <div id="map"></div>
+      <div class="map-caption"><span class="legend-gradient"></span><span>TIR-1 infrared</span><span class="legend-gradient activation"></span><span>Grad-CAM activation</span></div>
+      <div class="map-controls"><label for="opacity">Activation opacity <output id="opacity-value">65%</output></label><input id="opacity" type="range" min="0" max="100" value="65"></div>
+    </section>
+    <aside class="diagnostic-panel">
+      <div class="panel-heading"><div><p class="eyebrow">EXPLAINABLE FORECAST</p><h2>Convective risk</h2></div><span id="hazard-badge" class="badge low">LOW</span></div>
+      <div class="metric-grid"><div class="metric-card"><span>Heavy rain probability</span><strong id="risk-value">--</strong><div class="gauge"><div id="risk-gauge"></div></div></div><div class="metric-card"><span>QPE rate</span><strong><span id="qpe-value">--</span><small> mm/h</small></strong><span class="metric-note">Current estimate</span></div></div>
+      <div class="section"><div class="section-title"><span>Physical consistency</span><span id="physics-score">--</span></div><div class="score-track"><div id="physics-bar"></div></div><p id="physics-tier" class="metric-note">Awaiting explanation</p></div>
+      <div class="section"><div class="section-title"><span>Channel attribution</span><span class="unit">relative share</span></div><div id="attribution-chart"></div></div>
+      <div class="section"><div class="section-title"><span>Temporal attention</span><span class="unit">historical influence</span></div><div id="timeline" class="timeline"><span>t-90</span><span>t-60</span><span>t-30</span><span>t</span></div></div>
+      <div class="explanation"><p class="eyebrow">SYNTHESIZED DIAGNOSTIC</p><p id="diagnostic-text">Load a demo frame to begin.</p></div>
+      <div class="actions"><button id="load-demo">Load Demo Satellite Frame</button><button id="run-prediction" disabled>Run Prediction</button><button id="run-explanation" disabled>Generate XAI Explanation</button></div>
+    </aside>
+  </main>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

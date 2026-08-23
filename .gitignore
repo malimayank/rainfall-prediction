@@ -1,0 +1,20 @@
+# Large geospatial and scientific data files
+*.nc
+*.h5
+*.hdf5
+*.zarr
+*.tif
+
+# Model checkpoints
+*.pt
+*.ckpt
+
+# Logs and runtime output
+*.log
+logs/
+
+# Python cache and local environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/

@@ -1,0 +1,9 @@
+# Baseline and dual-branch model hyperparameters.
+sequence_length: 4
+satellite_channels: 6
+atmosphere_channels: 8
+patch_size: [128, 128]
+encoder_channels: [64, 128, 256, 512]
+temporal_attention_heads: 8
+classification_activation: sigmoid
+qpe_activation: softplus

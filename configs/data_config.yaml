@@ -1,0 +1,8 @@
+# Configuration for the Indian Monsoon heavy rainfall prediction domain.
+bounding_box: [65.0, 5.0, 95.0, 38.0]  # min_lon, min_lat, max_lon, max_lat
+spatial_resolution_degrees: 0.04
+spatial_resolution_approx_km: 4
+sequence_length: 4
+sequence_timestamps: ["t-90", "t-60", "t-30", "t"]
+lead_time_minutes: 60
+heavy_rain_threshold_mm_per_hour: 7.5
