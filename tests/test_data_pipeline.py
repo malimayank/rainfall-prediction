@@ -1,48 +1,24 @@
-"""Focused tests for the synthetic rainfall data pipeline."""
+"""Tests for the strict real-observation dataset contract."""
 
-from datetime import datetime, timedelta
+from pathlib import Path
 
 import pytest
 
-np = pytest.importorskip("numpy")
-torch = pytest.importorskip("torch")
-
-from src.data.dataset import RainfallSpatioTemporalDataset, split_years
+from src.data.dataset import RainfallSpatioTemporalDataset, split_chronological_sequences, split_years
 
 
-def test_dummy_batch_shapes_and_finite_values() -> None:
-    dataset = RainfallSpatioTemporalDataset(
-        split="train", dummy=True, patch_size=(128, 128), dummy_channels=2
-    )
-    inputs, targets = dataset[0]
-    batch_inputs = torch.stack([inputs, dataset[1][0]])
-    batch_mask = torch.stack([targets["mask"], dataset[1][1]["mask"]])
-
-    assert tuple(batch_inputs.shape) == (2, 4, 2, 128, 128)
-    assert tuple(batch_mask.shape) == (2, 1, 128, 128)
-    assert torch.isfinite(batch_inputs).all()
-    assert torch.isfinite(batch_mask).all()
-    assert torch.isfinite(targets["qpe"]).all()
+def test_real_dataset_requires_observations() -> None:
+    with pytest.raises(FileNotFoundError, match="Real INSAT and GPM files"):
+        RainfallSpatioTemporalDataset([], [])
 
 
-def test_strict_split_boundaries_have_no_temporal_leakage() -> None:
-    dataset = RainfallSpatioTemporalDataset(split="val", dummy=True)
-    allowed_years = set(split_years("val"))
-    for target_timestamp in dataset.sample_timestamps:
-        assert target_timestamp.year in allowed_years
-    for target_index in dataset.indices:
-        window = dataset.timestamps[target_index - 3 : target_index + 2]
-        assert {timestamp.year for timestamp in window} == allowed_years
+def test_calendar_partitions_are_disjoint() -> None:
+    assert set(split_years("train")).isdisjoint(split_years("val"))
+    assert set(split_years("val")).isdisjoint(split_years("test"))
 
 
-def test_split_rejects_windows_crossing_calendar_boundary() -> None:
-    timestamps = [
-        datetime(2022, 12, 31, 23, 0) + timedelta(minutes=30 * index)
-        for index in range(5)
-    ]
-    features = np.zeros((5, 1, 128, 128), dtype="float32")
-    rainfall = np.zeros((5, 128, 128), dtype="float32")
-    with pytest.raises(ValueError, match="No valid samples"):
-        RainfallSpatioTemporalDataset(
-            features, rainfall, timestamps, split="val", patch_size=(128, 128)
-        )
+def test_chronological_split_has_no_overlap() -> None:
+    splits = split_chronological_sequences([f"2023-06-{index:02d}" for index in range(1, 21)])
+    assert set(splits["train_indices"]).isdisjoint(splits["val_indices"])
+    assert set(splits["train_indices"]).isdisjoint(splits["test_indices"])
+    assert max(splits["train_indices"]) < min(splits["val_indices"])

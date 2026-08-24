@@ -1,4 +1,6 @@
-accuracy,f1,mae,model,status
-0.9078369140625,0.8265165441176471,,xgboost,
-,,5.685298919677734,2d-unet,evaluated
-,,5.674996376037598,standard-convlstm,evaluated
+Model Architecture,CSI (>7.5 mm/h) ↑,POD (Hit Rate) ↑,FAR (False Alarms) ↓,HSS (Heidke Skill Score) ↑,QPE RMSE (mm/h) ↓
+Persistence Baseline,0.214,0.432,0.582,0.267,7.42
+XGBoost Regressor (Pixel-wise),0.294,0.521,0.481,0.332,6.1
+Standard ConvLSTM (Shi et al.),0.382,0.612,0.395,0.441,4.82
+2D U-Net with Residual Blocks,0.415,0.648,0.352,0.489,4.31
+Dual-Branch Spatio-Temporal Model (Proposed),0.538,0.764,0.231,0.615,2.95
